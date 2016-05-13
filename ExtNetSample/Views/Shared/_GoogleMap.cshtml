@@ -1,0 +1,116 @@
+@{
+    var X = Html.X();
+}
+
+<script src="https://maps.google.com/maps/api/js?v=3.exp?API=AIzaSyBokoUVtXs6rx_hKU7LmYaBcxIdbss-DqM&signed_in=true&sensor=true&libraries=drawing" type="text/javascript"></script>
+<script type="text/javascript" src="https://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
+<!-- This css is to ensure that the google map contols (zoom bar etc) show and size correctly. -->
+<style>
+#map_canvas img{max-width:none}
+</style>
+
+<!-- This css is to give a nice big popup "info window" when a marker is clicked on the map -->
+<style>
+
+    .infoDiv {
+        max-height: 300px;    
+        width: 300px; 
+        -webkit-user-select: none; 
+        background-color: white; 
+    }
+
+    #info-title
+    {
+        font-family: 'Open Sans Condensed', sans-serif;
+        font-size: 22px;
+        font-weight: 400;
+        padding: 10px;
+        background-color: #48b5e9;
+        color: white;
+        margin: 1px;
+        border-radius: 2px 2px 0 0;
+    }
+
+    #legend {
+        background: #e9e9e9;
+        padding: 5px;
+        width: 200px;
+        max-height: 300px;
+        border-radius: 1px;
+    }
+
+label.checkbox-label input[type=checkbox]{
+    position: relative;
+    vertical-align: middle;
+    bottom: 2px;
+}
+
+ul {
+    list-style-type:none;
+}
+
+li > label > span {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    position: relative;
+    vertical-align: middle;
+    bottom: 2px;
+    border:none;
+    border-radius: 50% 50%;
+}
+
+div.controlset {display: inline; float:left; width: 100%;}
+
+</style>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<script>
+    var map;
+    var panorama;
+    var streetView = new google.maps.StreetViewService();
+
+    function BuildMap() {
+
+        google.maps.visualRefresh = true;
+        var mapCenter = new google.maps.LatLng(46.852634, -101.426259000000020);
+
+        // map options
+        var mapOptions = {
+            zoom: 5,
+            center: mapCenter,
+            mapTypeControl: true,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.TOP_LEFT
+            },
+            zoomControl: true,
+            zoomControlOptions: {
+                style: google.maps.ZoomControlStyle.LARGE,
+                position: google.maps.ControlPosition.LEFT_TOP
+            },
+            scaleControl: true,
+            streetViewControl: true,
+            streetViewControlOptions: {
+                position: google.maps.ControlPosition.LEFT_TOP
+            }
+        }
+
+        map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('legend'));
+        google.maps.event.trigger(map, "resize");
+
+        // set the map street view panorama
+        panorama = new google.maps.StreetViewPanorama(document.getElementById('map_streetview'));
+        map.setStreetView(panorama);
+
+    }
+
+</script>
+
+<div id="legend">
+  <ul id="legendItems">
+  </ul>
+</div>

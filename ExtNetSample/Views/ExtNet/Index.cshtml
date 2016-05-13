@@ -1,0 +1,119 @@
+@{
+    ViewBag.Title = "NBIOptimizer";
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+    var X = Html.X();
+}
+@Html.X().ResourceManager(ViewBag.ManagerConfig as MvcResourceManagerConfig)
+
+@(
+    X.Viewport()
+    .Layout(LayoutType.Border)
+    .ID("ViewPort")
+    .Items(
+    X.Panel().Region(Region.Center).Layout(LayoutType.Border).Items(
+     X.Panel()
+        .Region(Region.Center)
+        .Layout(LayoutType.Border)
+        .ContentFromPartial("~/Views/Shared/_GoogleMap.cshtml")
+        .Listeners(ls => ls.Show.Handler = @"google.maps.event.trigger(map, 'resize');")
+        .Listeners(ls => ls.AfterRender.Handler = @"BuildMap(); google.maps.event.trigger(map, 'resize');")
+        .Frame(true)
+        .Items(
+            X.Panel()
+            .Region(Region.Center)
+            .Layout(LayoutType.Border)
+            .Items(
+                X.Panel()
+                .Region(Region.West)
+                .Layout(LayoutType.Border)
+                .Width(500)
+                .MinWidth(500)
+                .Resizable(true)
+                .Collapsed(true)
+                .ResizeHandles(ResizeHandle.East)
+                .Collapsible(true)
+                .ID("map_streetview_parent")
+                .Listeners(ls => ls.Collapse.Handler = "google.maps.event.trigger(map, 'resize');")
+                .Listeners(ls => ls.Resize.Handler = "google.maps.event.trigger(map, 'resize');google.maps.event.trigger(panorama, 'resize');")
+                .Title("Street View")
+                .Items(
+                    X.Panel()
+                    .Region(Region.Center)
+                    .Layout(LayoutType.Column)
+                    .Header(false)
+                    .ColumnWidth(1.00)
+                    .ID("map_streetview")
+                ),
+
+                X.Panel()
+                .Region(Region.Center)
+                .Layout(LayoutType.Anchor)
+                .ID("map_canvas")
+            ),
+
+            X.TabPanel()
+            .ResizeHandles(ResizeHandle.North)
+            .Height(350)
+            .Collapsible(true)
+            .Resizable(true)
+            .Title("Layers Data")
+            .ID("MapGridTabs")
+            .Listeners(ls => ls.Resize.Handler = "google.maps.event.trigger(map, 'resize');")
+            .Listeners(ls => ls.Collapse.Handler = "google.maps.event.trigger(map, 'resize');")
+            .Region(Region.South)
+            .Layout(LayoutType.Border)
+            .Items(tabs =>
+            {
+                tabs.Add(
+                    X.Panel()
+                    .Layout(LayoutType.Border)
+                    .Icon(Icon.Layers)
+                    .ID("MapLayersGridTab")
+                    .Title("Saved Layers Data")
+                    .Region(Region.Center)
+                    .Listeners(ls => ls.Collapse.Handler = "google.maps.event.trigger(map, 'resize');")
+                    //.ItemsFromPartial("~/Views/Shared/_MapLayersGrid.cshtml")
+                );
+
+                tabs.Add(
+                    X.Panel()
+                    .Layout(LayoutType.Border)
+                    .Icon(Icon.ArrowRotateAnticlockwise)
+                    .ID("MapHistoricalGridTab")
+                    .Title("NBI Data")
+                    .Region(Region.Center)
+                    .Listeners(ls => ls.Collapse.Handler = "google.maps.event.trigger(map, 'resize');")
+                    //.ItemsFromPartial("~/Views/Shared/_MapHistoricalGrid.cshtml")
+                );
+
+                tabs.Add(
+                    X.Panel()
+                    .Layout(LayoutType.Border)
+                    .Icon(Icon.Lightning)
+                    .ID("MapRenewalGridTab")
+                    .Title("Preservation Plans Data")
+                    .Region(Region.Center)
+                    .Listeners(ls => ls.Collapse.Handler = "google.maps.event.trigger(map, 'resize');")
+                    //.ItemsFromPartial("~/Views/Shared/_MapRenewalPlansGrid.cshtml")
+                    .HideMode(HideMode.Offsets)
+                );
+
+            })
+        ),
+
+        X.Panel()
+            .Region(Region.East)
+            .Layout(LayoutType.Border)
+            .Title("Bridge Details")
+            .ID("AssetDetail")
+            .Collapsible(true)
+            .Collapsed(true)
+            .Listeners(ls => ls.Collapse.Handler = "google.maps.event.trigger(map, 'resize');")
+            .Resizable(true)
+            .ResizeHandles(ResizeHandle.West)
+            .MinWidth(500)
+            .Width(500)
+            //.ItemsFromPartial("~/Views/Shared/_AssetDetailPanel.cshtml")
+        )
+    )
+)

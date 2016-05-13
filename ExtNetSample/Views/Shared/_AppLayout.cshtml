@@ -1,0 +1,26 @@
+﻿@{
+    Layout = null;
+    var X = Html.X();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <title>@ViewBag.Title</title>
+   
+</head>
+<body>
+    <div id="blanket" style="display:none;"></div>
+	<div id="popUpDiv" style="display:none;">
+	<div class="container">
+        @RenderBody()
+    </div>
+</body>
+</html>
