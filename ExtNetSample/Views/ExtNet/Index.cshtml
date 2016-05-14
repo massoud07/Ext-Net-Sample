@@ -16,7 +16,6 @@
         .Layout(LayoutType.Border)
         .ContentFromPartial("~/Views/Shared/_GoogleMap.cshtml")
         .Listeners(ls => ls.Show.Handler = @"google.maps.event.trigger(map, 'resize');")
-        .Listeners(ls => ls.AfterRender.Handler = @"BuildMap(); google.maps.event.trigger(map, 'resize');")
         .Frame(true)
         .Items(
             X.Panel()
@@ -49,6 +48,7 @@
                 .Region(Region.Center)
                 .Layout(LayoutType.Anchor)
                 .ID("map_canvas")
+                .Listeners(ls => ls.AfterRender.Handler = @"BuildMap(); google.maps.event.trigger(map, 'resize');")
             ),
 
             X.TabPanel()
@@ -72,7 +72,7 @@
                     .Title("Saved Layers Data")
                     .Region(Region.Center)
                     .Listeners(ls => ls.Collapse.Handler = "google.maps.event.trigger(map, 'resize');")
-                    //.ItemsFromPartial("~/Views/Shared/_MapLayersGrid.cshtml")
+                //.ItemsFromPartial("~/Views/Shared/_MapLayersGrid.cshtml")
                 );
 
                 tabs.Add(
@@ -83,7 +83,7 @@
                     .Title("NBI Data")
                     .Region(Region.Center)
                     .Listeners(ls => ls.Collapse.Handler = "google.maps.event.trigger(map, 'resize');")
-                    //.ItemsFromPartial("~/Views/Shared/_MapHistoricalGrid.cshtml")
+                //.ItemsFromPartial("~/Views/Shared/_MapHistoricalGrid.cshtml")
                 );
 
                 tabs.Add(
@@ -113,7 +113,7 @@
             .ResizeHandles(ResizeHandle.West)
             .MinWidth(500)
             .Width(500)
-            //.ItemsFromPartial("~/Views/Shared/_AssetDetailPanel.cshtml")
+        //.ItemsFromPartial("~/Views/Shared/_AssetDetailPanel.cshtml")
         )
     )
 )

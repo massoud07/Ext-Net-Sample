@@ -97,13 +97,13 @@ div.controlset {display: inline; float:left; width: 100%;}
             }
         }
 
-        map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+        map = new google.maps.Map(document.getElementById("map_canvas-innerCt"), mapOptions);
 
         map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('legend'));
         google.maps.event.trigger(map, "resize");
 
         // set the map street view panorama
-        panorama = new google.maps.StreetViewPanorama(document.getElementById('map_streetview'));
+        panorama = new google.maps.StreetViewPanorama(document.getElementById('map_streetview-innerCt'));
         map.setStreetView(panorama);
 
     }
